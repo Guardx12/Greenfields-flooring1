@@ -9,12 +9,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/gallery",
     "/services/carpet",
     "/services/lvt",
+    "/services",
     "/services/vinyl",
     "/locations/worthing",
     "/locations/shoreham-by-sea",
     "/locations/brighton",
     "/locations/littlehampton",
-    "/locations/west-sussex"
+    "/locations",
+    "/locations/west-sussex",
+    "/sitemap"
   ];
 
   return routes.map(r => ({

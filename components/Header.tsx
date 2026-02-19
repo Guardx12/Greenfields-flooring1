@@ -6,7 +6,8 @@ import { site } from "@/components/site-data";
 import { Icons } from "@/components/icons";
 
 const nav = [
-  { href: "/#services", label: "Services" },
+  { href: "/services", label: "Services" },
+  { href: "/locations", label: "Areas" },
   { href: "/gallery", label: "Gallery" },
   { href: "/about", label: "About" },
   { href: "/#contact", label: "Contact" },

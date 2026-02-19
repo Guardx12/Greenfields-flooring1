@@ -166,3 +166,17 @@ body {
   background-repeat: repeat-x;
   animation: shimmerText 4.8s ease-in-out infinite;
 }
+
+
+/* --- Mexican-wave letters --- */
+@keyframes mexWave {
+  0%, 70%, 100% { transform: translateY(0); }
+  12% { transform: translateY(-8px); }
+  24% { transform: translateY(0); }
+}
+.wave-letter {
+  display: inline-block;
+  animation: mexWave 2.8s ease-in-out infinite;
+  animation-delay: var(--delay, 0ms);
+  will-change: transform;
+}
