@@ -30,7 +30,7 @@ export function RollingLogo() {
         <motion.div
           animate={{ rotate: [0, 720, 1440] }}
           transition={{ duration: 7.5, repeat: Infinity, ease: "easeInOut" }}
-          className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-soft bg-black/30 logo-gleam"
+          className="h-20 w-20 rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-soft bg-black/30 logo-gleam"
         >
           <img src="/logo.jpg" alt="Greenfields logo" className="h-full w-full object-cover" />
         </motion.div>

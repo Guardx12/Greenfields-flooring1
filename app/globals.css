@@ -199,4 +199,11 @@ body {
 .wave-wrap{ white-space: normal; }
 .wave-base{ white-space: normal; }
 
+
+/* --- Mobile layout safety --- */
 html, body { overflow-x: hidden; }
+img, svg, video, canvas { max-width: 100%; height: auto; }
+iframe { max-width: 100%; }
+* { min-width: 0; }
+.wave-wrap { display: inline-block; max-width: 100%; }
+.wave-base, .wave-overlay { max-width: 100%; }

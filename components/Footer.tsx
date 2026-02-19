@@ -18,7 +18,7 @@ export function Footer() {
 
 <div className="text-sm">
   <div className="font-semibold">Quick links</div>
-  <div className="mt-3 grid gap-2 text-white/70 break-words">
+  <div className="mt-3 grid gap-2 text-white/70">
     <a className="hover:text-white" href="/">Home</a>
     <a className="hover:text-white" href="/about">About</a>
     <a className="hover:text-white" href="/gallery">Gallery</a>
@@ -30,7 +30,7 @@ export function Footer() {
 
           <div className="text-sm">
             <div className="font-semibold">Contact</div>
-            <div className="mt-3 grid gap-2 text-white/70 break-words">
+            <div className="mt-3 grid gap-2 text-white/70">
               <a className="inline-flex items-center gap-2 hover:text-white" href={`tel:${site.phone.replace(/\s/g, "")}`}>
                 <Icons.Phone className="h-4 w-4" /> {site.phone}
               </a>

@@ -37,7 +37,7 @@ export default function Home() {
                 Family‑run • 65+ years combined experience • Free estimates
               </div>
 
-              <h1 className="mt-5 text-4xl font-semibold tracking-tight leading-tight md:text-5xl md:leading-[1.08]">
+              <h1 className="mt-5 text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight leading-tight md:leading-[1.08]">
   <WavyText text="Flooring that feels premium" />
   <br className="hidden sm:block" />
   <span className="block sm:mt-2">
@@ -109,8 +109,8 @@ export default function Home() {
                 </div>
             </div>
 
-            <div className="relative">
-              <div className="absolute -inset-6 rounded-[2.5rem] bg-gf-lime/10 blur-2xl" />
+            <div className="relative overflow-hidden">
+              <div className="absolute inset-0 sm:-inset-6 rounded-[2.5rem] bg-gf-lime/10 blur-2xl" />
               <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 shadow-soft">
                 <img
                   src="/shop.webp"

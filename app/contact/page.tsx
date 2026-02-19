@@ -40,7 +40,7 @@ export default function ContactPage() {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-5 lg:grid-cols-12">
+          <div className="mt-10 grid gap-5 lg:grid-cols-12 min-w-0">
             <div className="lg:col-span-5 card hover-lift">
               <div className="text-sm font-semibold">Call the shop</div>
               <a className="mt-3 btn btn-primary w-full" href={`tel:${site.phone}`}>
@@ -79,7 +79,7 @@ export default function ContactPage() {
                 </a>
               </div>
 
-              <div className="mt-6 flex flex-wrap items-center gap-3">
+              <div className="mt-6 flex items-center gap-3">
                 <a
                   aria-label="Facebook"
                   href={site.socials.facebook}
@@ -132,7 +132,7 @@ export default function ContactPage() {
                     <iframe
                       title="Greenfields Flooring map"
                       src={mapSrc}
-                      className="h-[360px] w-full"
+                      className="h-[300px] sm:h-[360px] w-full"
                       loading="lazy"
                       referrerPolicy="no-referrer-when-downgrade"
                     />
