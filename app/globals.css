@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gf-lime: #C7FF1A;
+  --gf-ink: #0B0F12;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: radial-gradient(1200px 600px at 20% 0%, rgba(199,255,26,0.18), transparent 55%),
+              radial-gradient(900px 500px at 90% 10%, rgba(199,255,26,0.10), transparent 60%),
+              linear-gradient(180deg, #070A0D, #0B0F12);
+  color: #EAF0F5;
+}
+
+::selection { background: rgba(199,255,26,0.25); }
+
+.container-pad { @apply mx-auto max-w-6xl px-5; }
+
+.glass {
+  background: rgba(11,15,18,0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(199,255,26,0.18);
+}
+
+.badge {
+  @apply inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium;
+  border: 1px solid rgba(199,255,26,0.28);
+  background: rgba(199,255,26,0.08);
+}
+
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition;
+  box-shadow: 0 12px 26px rgba(0,0,0,0.35);
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, rgba(199,255,26,1), rgba(140,255,80,1));
+  color: #081013;
+}
+
+.btn-primary:hover { filter: brightness(1.05); transform: translateY(-1px); }
+.btn-ghost { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10); }
+.btn-ghost:hover { background: rgba(255,255,255,0.10); }
+
+.card {
+  @apply rounded-3xl p-6;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.hr { height: 1px; background: rgba(255,255,255,0.10); }
