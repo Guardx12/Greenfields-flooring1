@@ -37,10 +37,9 @@ export default function Home() {
                 Family‑run • 65+ years combined experience • Free estimates
               </div>
 
-              <h1 className="mt-5 text-4xl font-semibold  tracking-tight md:text-5xl">
-                Flooring that feels{" "}
-                <span className="text-gf-lime wavy">premium</span> — fitted with pride.
-              </h1>
+              <h1 className="mt-5 text-4xl font-semibold tracking-tight leading-tight md:text-5xl md:leading-[1.08]">
+  <WavyText text="Flooring that feels premium — fitted with pride." />
+</h1>
 
               <p className="mt-4 text-base text-white/70 md:text-lg">
                 Greenfields Flooring is a family‑run showroom in Lancing. We supply and fit carpets, vinyl &amp; LVT, wood &amp; laminate,

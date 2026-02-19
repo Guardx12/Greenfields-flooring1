@@ -195,3 +195,6 @@ body {
   animation-iteration-count: infinite;
   animation-delay: var(--delay, 0ms);
 }
+
+.wave-wrap{ white-space: normal; }
+.wave-base{ white-space: normal; }
