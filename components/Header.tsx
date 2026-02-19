@@ -28,7 +28,7 @@ export function Header() {
       <div className={`container-pad ${scrolled ? "py-3" : "py-5"} transition`}>
         <div className={`flex items-center justify-between rounded-2xl px-4 py-3 ${scrolled ? "glass" : "bg-transparent"}`}>
           <Link href="/" className="flex items-center gap-3">
-            <img src="/logo.jpg" alt="Greenfields Flooring logo" className="h-10 w-10 rounded-xl object-cover ring-1 ring-white/10" />
+            <img src="/logo.jpg" alt="Greenfields Flooring logo" className="h-10 w-10 rounded-xl object-cover ring-1 ring-white/10 logo-gleam" />
             <div className="leading-tight">
               <div className="text-sm font-semibold tracking-wide">{site.name}</div>
               <div className="text-xs text-white/60">{site.tagline}</div>
@@ -45,6 +45,12 @@ export function Header() {
               <span className="inline-flex items-center gap-2 text-sm font-semibold">
                 <Icons.GoogleG className="h-4 w-4" /> Leave a review
               </span>
+            </a>
+            <a aria-label="Facebook" href={site.socials.facebook} target="_blank" rel="noreferrer" className="grid h-10 w-10 place-items-center rounded-xl bg-white/5 ring-1 ring-white/10 hover:bg-white/10 transition hover-lift">
+              <Icons.FacebookColor className="h-5 w-5" />
+            </a>
+            <a aria-label="Instagram" href={site.socials.instagram} target="_blank" rel="noreferrer" className="grid h-10 w-10 place-items-center rounded-xl bg-white/5 ring-1 ring-white/10 hover:bg-white/10 transition hover-lift">
+              <Icons.InstagramColor className="h-5 w-5" />
             </a>
             <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="btn btn-primary">
               <Icons.Phone className="h-4 w-4" />

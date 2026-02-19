@@ -10,3 +10,21 @@
 
 ## Add Google review link
 Open `components/site-data.ts` and paste the link into `socials.googleReview`, then add a button wherever you want.
+
+
+## Contact form (sends email via Vercel Functions)
+Set these Environment Variables in Vercel (Project → Settings → Environment Variables):
+- SMTP_HOST
+- SMTP_PORT (587 typical, or 465 for secure)
+- SMTP_USER
+- SMTP_PASS
+
+Then redeploy. (A good option is SMTP from your email provider.)
+
+## Contact form
+This build uses FormSubmit for zero-config email sending (no API keys, no SMTP).
+It sends to: greenfieldsflooring@hotmail.co.uk
+
+
+## Gallery photos
+This build includes your uploaded images in `/public/gallery/` and shows up to 12 on the Gallery section.

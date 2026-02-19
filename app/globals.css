@@ -52,3 +52,70 @@ body {
 }
 
 .hr { height: 1px; background: rgba(255,255,255,0.10); }
+
+
+/* --- Elite micro-interactions --- */
+@keyframes shimmerText {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes floaty {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-2px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes shineSweep {
+  0% { transform: translateX(-140%) rotate(12deg); opacity: 0; }
+  20% { opacity: 0.45; }
+  55% { opacity: 0.10; }
+  100% { transform: translateX(160%) rotate(12deg); opacity: 0; }
+}
+
+.hover-lift {
+  transition: transform 250ms cubic-bezier(.2,.8,.2,1), box-shadow 250ms cubic-bezier(.2,.8,.2,1), border-color 250ms;
+  will-change: transform;
+}
+.hover-lift:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 18px 46px rgba(0,0,0,0.45);
+  border-color: rgba(199,255,26,0.24);
+}
+
+.btn {
+  transition: transform 220ms cubic-bezier(.2,.8,.2,1), filter 220ms, box-shadow 220ms, background 220ms;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0px) scale(0.99); }
+
+.shimmer-title {
+  background: linear-gradient(110deg, rgba(255,255,255,0.92), rgba(199,255,26,0.95), rgba(255,255,255,0.92));
+  background-size: 220% 220%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmerText 6.5s ease-in-out infinite;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.40);
+}
+
+.wavy {
+  display: inline-block;
+  animation: floaty 4.8s ease-in-out infinite;
+}
+
+.logo-gleam {
+  position: relative;
+  overflow: hidden;
+}
+.logo-gleam::after {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
+  filter: blur(1px);
+  transform: translateX(-140%) rotate(12deg);
+  animation: shineSweep 6.2s ease-in-out infinite;
+  pointer-events: none;
+}

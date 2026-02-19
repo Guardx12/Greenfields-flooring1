@@ -4,6 +4,8 @@ import { site } from "@/components/site-data";
 import { Icons } from "@/components/icons";
 import { RollingLogo } from "@/components/RollingLogo";
 import { LocalBusinessJsonLd } from "@/components/SEO";
+import { ReviewsMarquee } from "@/components/ReviewsMarquee";
+import { ContactForm } from "@/components/ContactForm";
 
 function SectionTitle({ kicker, title, desc }: { kicker: string; title: string; desc: string }) {
   return (
@@ -34,9 +36,9 @@ export default function Home() {
                 Family‑run • 65+ years combined experience • Free estimates
               </div>
 
-              <h1 className="mt-5 text-4xl font-semibold tracking-tight md:text-5xl">
+              <h1 className="mt-5 text-4xl font-semibold shimmer-title tracking-tight md:text-5xl">
                 Flooring that feels{" "}
-                <span className="text-gf-lime">premium</span> — fitted with pride.
+                <span className="text-gf-lime wavy">premium</span> — fitted with pride.
               </h1>
 
               <p className="mt-4 text-base text-white/70 md:text-lg">
@@ -56,19 +58,18 @@ export default function Home() {
 
               <div className="mt-8 grid gap-3 sm:grid-cols-3">
                 {site.proof.map((p) => (
-                  <div key={p.k} className="card">
+                  <div key={p.k} className="card hover-lift">
                     <div className="text-xl font-semibold text-gf-lime">{p.k}</div>
                     <div className="mt-1 text-sm text-white/70">{p.v}</div>
                   </div>
                 ))}
               </div>
 
+              <ReviewsMarquee />
+
               <div className="mt-8">
                 <RollingLogo />
-                <p className="mt-3 text-center text-xs text-white/55">
-                  A little motion touch — your logo “rolls out” the Greenfields carpet.
-                </p>
-              </div>
+                </div>
             </div>
 
             <div className="relative">
@@ -115,7 +116,7 @@ export default function Home() {
 
           <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {site.services.map((s) => (
-              <div key={s.title} className="card">
+              <div key={s.title} className="card hover-lift">
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <div className="text-lg font-semibold">{s.title}</div>
@@ -145,22 +146,12 @@ export default function Home() {
             desc="Bring ideas, measurements, or just a rough brief — we’ll help you narrow it down and book fitting."
           />
 
-          <div className="mt-10 grid gap-5 lg:grid-cols-12">
-            <div className="lg:col-span-7 card p-0 overflow-hidden">
-              <img src="/gallery-1.jpg" alt="Showroom and fitting work" className="h-[420px] w-full object-cover" />
-            </div>
-            <div className="lg:col-span-5 grid gap-5">
-              <div className="card p-0 overflow-hidden">
-                <img src="/gallery-2.jpg" alt="Flooring samples" className="h-[200px] w-full object-cover" />
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {(site as any).gallery?.slice(0, 12).map((src: string, idx: number) => (
+              <div key={idx} className="card p-0 overflow-hidden hover-lift">
+                <img src={src} alt={`Greenfields Flooring photo ${idx + 1}`} className="h-[240px] w-full object-cover" />
               </div>
-              <div className="card p-0 overflow-hidden">
-                <img src="/gallery-3.jpg" alt="Flooring detail" className="h-[200px] w-full object-cover" />
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6 text-center text-sm text-white/60">
-            Want your own photos added? Drop them in <span className="text-white">/public</span> and we’ll swap these out.
+            ))}
           </div>
         </div>
       </section>
@@ -198,7 +189,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="card">
+            <div className="card hover-lift">
               <h3 className="text-xl font-semibold">Opening times</h3>
               <div className="mt-4 grid gap-2 text-sm text-white/70">
                 {site.opening.map((o) => (
@@ -214,10 +205,7 @@ export default function Home() {
                 <a className="btn btn-primary w-full" href="#contact">
                   Get a free estimate
                 </a>
-                <p className="mt-3 text-xs text-white/55">
-                  Add your Google review link when you have it — we’ll place it prominently.
-                </p>
-              </div>
+                </div>
             </div>
           </div>
         </div>
@@ -287,44 +275,7 @@ export default function Home() {
                 “send to inbox” form, tell me the preferred email and I’ll wire it up to a serverless function.
               </p>
 
-              <form
-                className="mt-6 grid gap-4"
-                action={`mailto:${site.email}`}
-                method="post"
-                encType="text/plain"
-              >
-                <div className="grid gap-4 md:grid-cols-2">
-                  <input
-                    name="name"
-                    placeholder="Your name"
-                    className="w-full rounded-2xl bg-white/5 px-4 py-3 text-sm ring-1 ring-white/10 outline-none focus:ring-gf-lime/40"
-                  />
-                  <input
-                    name="phone"
-                    placeholder="Phone number"
-                    className="w-full rounded-2xl bg-white/5 px-4 py-3 text-sm ring-1 ring-white/10 outline-none focus:ring-gf-lime/40"
-                  />
-                </div>
-                <input
-                  name="email"
-                  placeholder="Email address"
-                  className="w-full rounded-2xl bg-white/5 px-4 py-3 text-sm ring-1 ring-white/10 outline-none focus:ring-gf-lime/40"
-                />
-                <textarea
-                  name="message"
-                  placeholder="Tell us what you’re looking for (rooms, material, rough size, timescale)…"
-                  rows={5}
-                  className="w-full rounded-2xl bg-white/5 px-4 py-3 text-sm ring-1 ring-white/10 outline-none focus:ring-gf-lime/40"
-                />
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <button type="submit" className="btn btn-primary">
-                    Send message
-                  </button>
-                  <div className="text-xs text-white/55">
-                    Prefer a call? Ring <span className="text-white">{site.phone}</span>.
-                  </div>
-                </div>
-              </form>
+              <ContactForm />
             </div>
           </div>
 

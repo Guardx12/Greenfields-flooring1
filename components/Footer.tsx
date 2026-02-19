@@ -40,10 +40,10 @@ export function Footer() {
             <div className="font-semibold">Social</div>
             <div className="mt-3 flex flex-wrap gap-3">
               <a className="btn btn-ghost" href={site.socials.facebook} target="_blank" rel="noreferrer">
-                <Icons.Facebook className="h-4 w-4" /> Facebook
+                <Icons.FacebookColor className="h-4 w-4" /> Facebook
               </a>
               <a className="btn btn-ghost" href={site.socials.instagram} target="_blank" rel="noreferrer">
-                <Icons.Instagram className="h-4 w-4" /> Instagram
+                <Icons.InstagramColor className="h-4 w-4" /> Instagram
               </a>
               <a className="btn btn-ghost" href={site.socials.googleReview} target="_blank" rel="noreferrer">
                 <Icons.GoogleG className="h-4 w-4" /> Google Review
