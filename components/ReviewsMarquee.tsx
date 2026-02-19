@@ -37,7 +37,7 @@ export function ReviewsMarquee() {
           {loop.map((r, idx) => (
             <div
               key={idx}
-              className="min-w-[320px] max-w-[320px] rounded-2xl bg-black/25 ring-1 ring-white/10 p-4 hover-lift"
+              className="min-w-[280px] max-w-[280px] sm:min-w-[320px] sm:max-w-[320px] rounded-2xl bg-black/25 ring-1 ring-white/10 p-4 hover-lift"
             >
               <div className="flex items-center gap-2 text-xs text-white/60">
                 <span className="text-gf-lime">★★★★★</span>

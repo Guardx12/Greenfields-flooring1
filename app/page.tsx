@@ -38,7 +38,11 @@ export default function Home() {
               </div>
 
               <h1 className="mt-5 text-4xl font-semibold tracking-tight leading-tight md:text-5xl md:leading-[1.08]">
-  <WavyText text="Flooring that feels premium — fitted with pride." />
+  <WavyText text="Flooring that feels premium" />
+  <br className="hidden sm:block" />
+  <span className="block sm:mt-2">
+    <WavyText text="— fitted with pride." />
+  </span>
 </h1>
 
               <p className="mt-4 text-base text-white/70 md:text-lg">
@@ -125,14 +129,14 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="mt-4 flex items-center gap-3">
+              <div className="mt-4 flex flex-wrap items-center gap-3">
                 <a aria-label="Facebook" href={site.socials.facebook} target="_blank" rel="noreferrer" className="grid h-11 w-11 place-items-center rounded-xl bg-white/5 ring-1 ring-white/10 hover:bg-white/10 transition hover-lift">
                   <Icons.FacebookColor className="h-6 w-6" />
                 </a>
                 <a aria-label="Instagram" href={site.socials.instagram} target="_blank" rel="noreferrer" className="grid h-11 w-11 place-items-center rounded-xl bg-white/5 ring-1 ring-white/10 hover:bg-white/10 transition hover-lift">
                   <Icons.InstagramColor className="h-6 w-6" />
                 </a>
-                <a href={site.socials.googleReview} target="_blank" rel="noreferrer" className="btn btn-ghost px-4 py-3">
+                <a href={site.socials.googleReview} target="_blank" rel="noreferrer" className="btn btn-ghost px-4 py-3 hover-lift w-full sm:w-auto" style={{ pointerEvents: "auto" }}>
                   <span className="inline-flex items-center gap-2 text-sm font-semibold">
                     <Icons.GoogleG className="h-4 w-4" /> Google Review
                   </span>

@@ -17,7 +17,7 @@ body {
 
 ::selection { background: rgba(199,255,26,0.25); }
 
-.container-pad { @apply mx-auto max-w-6xl px-5; }
+.container-pad { @apply mx-auto max-w-6xl px-4 sm:px-5 md:px-6; }
 
 .glass {
   background: rgba(11,15,18,0.6);
@@ -198,3 +198,5 @@ body {
 
 .wave-wrap{ white-space: normal; }
 .wave-base{ white-space: normal; }
+
+html, body { overflow-x: hidden; }
