@@ -180,3 +180,18 @@ body {
   animation-delay: var(--delay, 0ms);
   will-change: transform;
 }
+
+/* --- Stronger, unmistakable Mexican-wave (hero + headings) --- */
+@keyframes mexWaveStrong {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  15% { transform: translateY(-12px) rotate(-1deg); }
+  30% { transform: translateY(0px) rotate(0deg); }
+}
+.wave-letter {
+  display: inline-block;
+  animation-name: mexWaveStrong;
+  animation-duration: 2.2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-delay: var(--delay, 0ms);
+}
