@@ -21,6 +21,7 @@ export const site = {
   socials: {
     facebook: "https://www.facebook.com/greenfieldsflooring",
     instagram: "https://www.instagram.com/greenfields_flooring_lancing/",
+    checkatrade: "https://www.checkatrade.com/trades/greenfieldsfloo",
     googleReview: "https://search.google.com/local/writereview?placeid=ChIJWxHSoMqZdUgRij_ovUD4v1A"
   },
   services: [

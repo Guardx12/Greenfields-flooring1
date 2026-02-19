@@ -31,7 +31,7 @@ export function ReviewsMarquee() {
         <motion.div
           className="flex gap-4 px-5 pb-5"
           animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
           style={{ willChange: "transform" }}
         >
           {loop.map((r, idx) => (

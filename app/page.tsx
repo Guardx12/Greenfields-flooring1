@@ -68,6 +68,39 @@ export default function Home() {
 
               <ReviewsMarquee />
 
+<div className="mt-10 grid gap-5 lg:grid-cols-12">
+  <div className="lg:col-span-7 card p-0 overflow-hidden hover-lift">
+    <a href={site.socials.checkatrade} target="_blank" rel="noreferrer" className="block">
+      <div className="p-6">
+        <div className="text-sm text-white/60">Trusted on</div>
+        <div className="mt-3">
+          <img src="/checkatrade.svg" alt="Checkatrade" className="w-full max-w-[520px] wave-underline" />
+        </div>
+        <div className="mt-4 text-sm text-white/70">
+          Rated highly by customers — view our profile and recent feedback.
+        </div>
+        <div className="mt-6">
+          <span className="btn btn-primary">View Checkatrade</span>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <div className="lg:col-span-5 card hover-lift">
+    <div className="text-sm font-semibold">Prefer to speak to us?</div>
+    <div className="mt-2 text-sm text-white/70">The fastest way to get a quote is by phone.</div>
+    <div className="mt-5 flex flex-col gap-3">
+      <a className="btn btn-primary" href={`tel:${site.phone}`}>Call {site.phone}</a>
+      <a className="btn btn-ghost" href={site.socials.googleReview} target="_blank" rel="noreferrer">
+        <span className="inline-flex items-center gap-2 text-sm font-semibold">
+          <Icons.GoogleG className="h-4 w-4" /> Leave a Google review
+        </span>
+      </a>
+    </div>
+  </div>
+</div>
+
+
               <div className="mt-8">
                 <RollingLogo />
                 </div>

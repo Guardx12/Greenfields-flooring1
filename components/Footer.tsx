@@ -22,10 +22,9 @@ export function Footer() {
     <a className="hover:text-white" href="/">Home</a>
     <a className="hover:text-white" href="/about">About</a>
     <a className="hover:text-white" href="/gallery">Gallery</a>
-    <a className="hover:text-white" href="/#contact">Contact</a>
+    <a className="hover:text-white" href="/contact">Contact</a>
     <a className="hover:text-white" href="/services">Services</a>
     <a className="hover:text-white" href="/locations">Areas we cover</a>
-    <a className="hover:text-white" href="/sitemap">Site map</a>
   </div>
 </div>
 

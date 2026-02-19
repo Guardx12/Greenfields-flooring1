@@ -6,6 +6,7 @@ export default function SitemapPage() {
     "/",
     "/about",
     "/gallery",
+    "/contact",
     "/services/carpet",
     "/services/lvt",
     "/services/vinyl",
