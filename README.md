@@ -1,30 +1,30 @@
-# Greenfields Flooring — Agency Site (Vercel-ready)
+# promptedwebsiteguardxmain
 
-## Deploy
-1) Upload this folder to GitHub (make sure files are at repo root)
-2) Vercel → New Project → Import → Deploy (Next.js auto-detected)
+*Automatically synced with your [v0.app](https://v0.app) deployments*
 
-## Update assets
-- Replace `/public/shop.webp` with your preferred hero photo (keep filename)
-- Add more images into `/public` and update the gallery section in `app/page.tsx`
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/guardxalerts-3242s-projects/v0-promptedwebsiteguardxmain-to)
+[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/H71KQC41vRv)
 
-## Add Google review link
-Open `components/site-data.ts` and paste the link into `socials.googleReview`, then add a button wherever you want.
+## Overview
 
+This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
+Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
 
-## Contact form (sends email via Vercel Functions)
-Set these Environment Variables in Vercel (Project → Settings → Environment Variables):
-- SMTP_HOST
-- SMTP_PORT (587 typical, or 465 for secure)
-- SMTP_USER
-- SMTP_PASS
+## Deployment
 
-Then redeploy. (A good option is SMTP from your email provider.)
+Your project is live at:
 
-## Contact form
-This build uses FormSubmit for zero-config email sending (no API keys, no SMTP).
-It sends to: greenfieldsflooring@hotmail.co.uk
+**[https://vercel.com/guardxalerts-3242s-projects/v0-promptedwebsiteguardxmain-to](https://vercel.com/guardxalerts-3242s-projects/v0-promptedwebsiteguardxmain-to)**
 
+## Build your app
 
-## Gallery photos
-This build includes your uploaded images in `/public/gallery/` and shows up to 12 on the Gallery section.
+Continue building your app on:
+
+**[https://v0.app/chat/projects/H71KQC41vRv](https://v0.app/chat/projects/H71KQC41vRv)**
+
+## How It Works
+
+1. Create and modify your project using [v0.app](https://v0.app)
+2. Deploy your chats from the v0 interface
+3. Changes are automatically pushed to this repository
+4. Vercel deploys the latest version from this repository
