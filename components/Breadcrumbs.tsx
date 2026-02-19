@@ -1,4 +1,6 @@
-export function Breadcrumbs({ items }) {
+type Crumb = { name: string; url: string };
+
+export function Breadcrumbs({ items }: { items: Crumb[] }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -12,11 +14,13 @@ export function Breadcrumbs({ items }) {
 
   return (
     <>
-      <nav className="text-sm text-white/60 mb-4">
+      <nav className="text-sm text-white/60 mb-4" aria-label="Breadcrumb">
         {items.map((item, i) => (
           <span key={item.url}>
             {i > 0 && " / "}
-            <a href={item.url}>{item.name}</a>
+            <a href={item.url} className="hover:text-white">
+              {item.name}
+            </a>
           </span>
         ))}
       </nav>
