@@ -119,3 +119,50 @@ body {
   animation: shineSweep 6.2s ease-in-out infinite;
   pointer-events: none;
 }
+
+
+/* --- Wavy heading overlay (keeps base text colour) --- */
+@keyframes waveSheen {
+  0% { background-position: 0% 50%; transform: translateY(0px); }
+  50% { background-position: 100% 50%; transform: translateY(-1px); }
+  100% { background-position: 0% 50%; transform: translateY(0px); }
+}
+
+.wave-wrap { position: relative; display: inline-block; }
+.wave-base { position: relative; z-index: 1; color: rgba(255,255,255,0.95); }
+.wave-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(110deg, rgba(199,255,26,0.0), rgba(199,255,26,0.55), rgba(255,255,255,0.0));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0.45;
+  mix-blend-mode: screen;
+  animation: waveSheen 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.wave-underline {
+  position: relative;
+  display: inline-block;
+}
+.wave-underline::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-10px;
+  height:8px;
+  opacity:0.55;
+  background:
+    radial-gradient(12px 8px at 10px 4px, rgba(199,255,26,0.9), transparent 60%),
+    radial-gradient(12px 8px at 34px 4px, rgba(199,255,26,0.7), transparent 60%),
+    radial-gradient(12px 8px at 58px 4px, rgba(199,255,26,0.9), transparent 60%),
+    radial-gradient(12px 8px at 82px 4px, rgba(199,255,26,0.7), transparent 60%);
+  background-size: 96px 8px;
+  background-repeat: repeat-x;
+  animation: shimmerText 4.8s ease-in-out infinite;
+}

@@ -6,10 +6,10 @@ import { site } from "@/components/site-data";
 import { Icons } from "@/components/icons";
 
 const nav = [
-  { href: "#services", label: "Services" },
-  { href: "#gallery", label: "Gallery" },
-  { href: "#about", label: "About" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#services", label: "Services" },
+  { href: "/gallery", label: "Gallery" },
+  { href: "/about", label: "About" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export function Header() {

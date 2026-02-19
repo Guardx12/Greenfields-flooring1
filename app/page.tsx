@@ -6,6 +6,7 @@ import { RollingLogo } from "@/components/RollingLogo";
 import { LocalBusinessJsonLd } from "@/components/SEO";
 import { ReviewsMarquee } from "@/components/ReviewsMarquee";
 import { ContactForm } from "@/components/ContactForm";
+import { WavyText } from "@/components/WavyText";
 
 function SectionTitle({ kicker, title, desc }: { kicker: string; title: string; desc: string }) {
   return (
@@ -14,7 +15,7 @@ function SectionTitle({ kicker, title, desc }: { kicker: string; title: string; 
         <span className="h-2 w-2 rounded-full bg-gf-lime" />
         {kicker}
       </div>
-      <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">{title}</h2>
+      <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl"><WavyText text={title} /></h2>
       <p className="mt-3 text-sm text-white/70 md:text-base">{desc}</p>
     </div>
   );
@@ -36,7 +37,7 @@ export default function Home() {
                 Family‑run • 65+ years combined experience • Free estimates
               </div>
 
-              <h1 className="mt-5 text-4xl font-semibold shimmer-title tracking-tight md:text-5xl">
+              <h1 className="mt-5 text-4xl font-semibold  tracking-tight md:text-5xl">
                 Flooring that feels{" "}
                 <span className="text-gf-lime wavy">premium</span> — fitted with pride.
               </h1>
@@ -92,12 +93,17 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="mt-4 flex gap-3">
-                <a className="btn btn-ghost flex-1" href={site.socials.facebook} target="_blank" rel="noreferrer">
-                  <Icons.Facebook className="h-4 w-4" /> Facebook
+              <div className="mt-4 flex items-center gap-3">
+                <a aria-label="Facebook" href={site.socials.facebook} target="_blank" rel="noreferrer" className="grid h-11 w-11 place-items-center rounded-xl bg-white/5 ring-1 ring-white/10 hover:bg-white/10 transition hover-lift">
+                  <Icons.FacebookColor className="h-6 w-6" />
                 </a>
-                <a className="btn btn-ghost flex-1" href={site.socials.instagram} target="_blank" rel="noreferrer">
-                  <Icons.Instagram className="h-4 w-4" /> Instagram
+                <a aria-label="Instagram" href={site.socials.instagram} target="_blank" rel="noreferrer" className="grid h-11 w-11 place-items-center rounded-xl bg-white/5 ring-1 ring-white/10 hover:bg-white/10 transition hover-lift">
+                  <Icons.InstagramColor className="h-6 w-6" />
+                </a>
+                <a href={site.socials.googleReview} target="_blank" rel="noreferrer" className="btn btn-ghost px-4 py-3">
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold">
+                    <Icons.GoogleG className="h-4 w-4" /> Google Review
+                  </span>
                 </a>
               </div>
             </div>
