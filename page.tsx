@@ -307,12 +307,7 @@ export default function Home() {
 
             <div className="card lg:col-span-7">
               <h3 className="text-xl font-semibold">Quick quote message</h3>
-              <p className="mt-2 text-sm text-white/70">
-                This form is set up as a simple mailto (so it works instantly on Vercel). If you want a proper
-                “send to inbox” form, tell me the preferred email and I’ll wire it up to a serverless function.
-              </p>
-
-              <ContactForm />
+<ContactForm />
             </div>
           </div>
 
