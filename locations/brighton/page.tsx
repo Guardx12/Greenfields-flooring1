@@ -1,5 +1,5 @@
 import { Header } from "@/components/Header";
-import { Footer } from "@/components/footer";
+import { Footer } from "@/components/Footer";
 
 export const metadata = {
   title: "Flooring in Brighton | Greenfields Flooring",
