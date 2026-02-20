@@ -131,11 +131,6 @@ export default function Home() {
                 <a aria-label="Instagram" href={site.socials.instagram} target="_blank" rel="noreferrer" className="grid h-11 w-11 place-items-center rounded-xl bg-white/5 ring-1 ring-white/10 hover:bg-white/10 transition hover-lift">
                   <Icons.InstagramColor className="h-6 w-6" />
                 </a>
-                <a href={site.socials.googleReview} target="_blank" rel="noreferrer" className="btn btn-ghost px-4 py-3 hover-lift w-full sm:w-auto" style={{ pointerEvents: "auto" }}>
-                  <span className="inline-flex items-center gap-2 text-sm font-semibold">
-                    <Icons.GoogleG className="h-4 w-4" /> Google Review
-                  </span>
-                </a>
               </div>
             </div>
           </div>
