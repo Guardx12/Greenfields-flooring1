@@ -1,5 +1,5 @@
 import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import { Footer } from "@/components/footer";
 import { site } from "@/components/site-data";
 import { Icons } from "@/components/icons";
 import { RollingLogo } from "@/components/RollingLogo";
@@ -94,11 +94,6 @@ export default function Home() {
     <div className="mt-2 text-sm text-white/70">The fastest way to get a quote is by phone.</div>
     <div className="mt-5 flex flex-col gap-3">
       <a className="btn btn-primary" href={`tel:${site.phone}`}>Call {site.phone}</a>
-      <a className="btn btn-ghost" href={site.socials.googleReview} target="_blank" rel="noreferrer">
-        <span className="inline-flex items-center gap-2 text-sm font-semibold">
-          <Icons.GoogleG className="h-4 w-4" /> Leave a Google review
-        </span>
-      </a>
     </div>
   </div>
 </div>
