@@ -1,837 +1,338 @@
-"use client"
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { site } from "@/components/site-data";
+import { Icons } from "@/components/icons";
+import { RollingLogo } from "@/components/RollingLogo";
+import { LocalBusinessJsonLd } from "@/components/SEO";
+import { ReviewsMarquee } from "@/components/ReviewsMarquee";
+import { ContactForm } from "@/components/ContactForm";
+import { WavyText } from "@/components/WavyText";
 
-import { Navigation } from "@/components/navigation"
-import { Footer } from "@/components/footer"
-import MovingGoogleReviews from "@/components/moving-google-reviews"
-import Link from "next/link"
-import Image from "next/image"
-import { useEffect, useRef, useState, useCallback } from "react"
-import { motion, useReducedMotion, useInView } from "framer-motion"
-import {
-  Code2,
-  Search,
-  Smartphone,
-  Zap,
-  Layers,
-  Globe,
-  BarChart3,
-  FileCode,
-  ArrowRight,
-  CheckCircle,
-  Star,
-  MessageSquare,
-} from "lucide-react"
-
-/* ------------------------------------------------------------------ */
-/*  Animated gradient background (canvas)                              */
-/* ------------------------------------------------------------------ */
-function AnimatedBackground() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const prefersReduced = useReducedMotion()
-
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas || prefersReduced) return
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
-
-    let raf: number
-    let t = 0
-
-    const resize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
-    resize()
-    window.addEventListener("resize", resize)
-
-    const draw = () => {
-      t += 0.002
-      const w = canvas.width
-      const h = canvas.height
-
-      ctx.fillStyle = "#0a0e1a"
-      ctx.fillRect(0, 0, w, h)
-
-      const spots = [
-        {
-          x: w * (0.3 + 0.15 * Math.sin(t * 0.7)),
-          y: h * (0.3 + 0.1 * Math.cos(t * 0.5)),
-          r: Math.max(w, h) * 0.55,
-          color: `rgba(30, 58, 138, ${0.35 + 0.1 * Math.sin(t)})`,
-        },
-        {
-          x: w * (0.7 + 0.1 * Math.cos(t * 0.6)),
-          y: h * (0.5 + 0.15 * Math.sin(t * 0.8)),
-          r: Math.max(w, h) * 0.5,
-          color: `rgba(88, 28, 135, ${0.25 + 0.08 * Math.cos(t * 1.1)})`,
-        },
-        {
-          x: w * (0.5 + 0.2 * Math.sin(t * 0.4)),
-          y: h * (0.7 + 0.1 * Math.cos(t * 0.9)),
-          r: Math.max(w, h) * 0.45,
-          color: `rgba(14, 116, 144, ${0.2 + 0.06 * Math.sin(t * 0.7)})`,
-        },
-        {
-          x: w * (0.2 + 0.1 * Math.cos(t * 0.3)),
-          y: h * (0.8 + 0.05 * Math.sin(t * 1.2)),
-          r: Math.max(w, h) * 0.4,
-          color: `rgba(59, 130, 246, ${0.15 + 0.05 * Math.cos(t * 0.9)})`,
-        },
-      ]
-
-      spots.forEach((s) => {
-        const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r)
-        g.addColorStop(0, s.color)
-        g.addColorStop(1, "transparent")
-        ctx.fillStyle = g
-        ctx.fillRect(0, 0, w, h)
-      })
-
-      raf = requestAnimationFrame(draw)
-    }
-    draw()
-
-    return () => {
-      cancelAnimationFrame(raf)
-      window.removeEventListener("resize", resize)
-    }
-  }, [prefersReduced])
-
+function SectionTitle({ kicker, title, desc }: { kicker: string; title: string; desc: string }) {
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 -z-10"
-      style={{ background: "#0a0e1a" }}
-      aria-hidden="true"
-    />
-  )
-}
-
-/* ------------------------------------------------------------------ */
-/*  Floating particles (client-only to avoid hydration mismatch)       */
-/* ------------------------------------------------------------------ */
-function FloatingParticles() {
-  const prefersReduced = useReducedMotion()
-  const [particles, setParticles] = useState<
-    { id: number; x: number; y: number; size: number; duration: number; delay: number; opacity: number }[]
-  >([])
-
-  useEffect(() => {
-    if (prefersReduced) return
-    setParticles(
-      Array.from({ length: 18 }, (_, i) => ({
-        id: i,
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        size: 2 + Math.random() * 3,
-        duration: 12 + Math.random() * 20,
-        delay: Math.random() * 8,
-        opacity: 0.15 + Math.random() * 0.25,
-      }))
-    )
-  }, [prefersReduced])
-
-  if (particles.length === 0) return null
-
-  return (
-    <div className="fixed inset-0 -z-[5] overflow-hidden pointer-events-none" aria-hidden="true">
-      {particles.map((p) => (
-        <motion.div
-          key={p.id}
-          className="absolute rounded-full"
-          style={{
-            width: p.size,
-            height: p.size,
-            left: `${p.x}%`,
-            top: `${p.y}%`,
-            background: `radial-gradient(circle, rgba(147,197,253,${p.opacity}), transparent)`,
-            boxShadow: `0 0 ${p.size * 3}px rgba(147,197,253,${p.opacity * 0.5})`,
-          }}
-          animate={{
-            y: [0, -60, 0],
-            x: [0, 20 * (p.id % 2 === 0 ? 1 : -1), 0],
-            opacity: [p.opacity, p.opacity * 1.4, p.opacity],
-          }}
-          transition={{
-            duration: p.duration,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: p.delay,
-          }}
-        />
-      ))}
+    <div className="mx-auto max-w-2xl text-center">
+      <div className="badge mx-auto">
+        <span className="h-2 w-2 rounded-full bg-gf-lime" />
+        {kicker}
+      </div>
+      <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl"><WavyText text={title} /></h2>
+      <p className="mt-3 text-sm text-white/70 md:text-base">{desc}</p>
     </div>
-  )
+  );
 }
 
-/* ------------------------------------------------------------------ */
-/*  DVD-style bouncing logo orb                                        */
-/* ------------------------------------------------------------------ */
-function BouncingOrb() {
-  const prefersReduced = useReducedMotion()
-  const containerRef = useRef<HTMLDivElement>(null)
-  const posRef = useRef({ x: 60, y: 40 })
-  const velRef = useRef({ vx: 1.2, vy: 0.8 })
-  const [pos, setPos] = useState({ x: 60, y: 40 })
-
-  useEffect(() => {
-    if (prefersReduced) return
-    const container = containerRef.current
-    if (!container) return
-
-    const orbSize = 220
-    let raf: number
-
-    const step = () => {
-      const rect = container.getBoundingClientRect()
-      const maxX = rect.width - orbSize
-      const maxY = rect.height - orbSize
-
-      let { x, y } = posRef.current
-      let { vx, vy } = velRef.current
-
-      x += vx
-      y += vy
-
-      if (x <= 0) { x = 0; vx = Math.abs(vx); }
-      if (x >= maxX) { x = maxX; vx = -Math.abs(vx); }
-      if (y <= 0) { y = 0; vy = Math.abs(vy); }
-      if (y >= maxY) { y = maxY; vy = -Math.abs(vy); }
-
-      posRef.current = { x, y }
-      velRef.current = { vx, vy }
-      setPos({ x, y })
-      raf = requestAnimationFrame(step)
-    }
-    raf = requestAnimationFrame(step)
-
-    return () => cancelAnimationFrame(raf)
-  }, [prefersReduced])
-
+export default function Home() {
   return (
-    <div ref={containerRef} className="relative w-full h-[340px] sm:h-[400px]">
-      <div
-        className="absolute"
-        style={{
-          transform: `translate(${pos.x}px, ${pos.y}px)`,
-          willChange: "transform",
-        }}
-      >
-        {/* Outer glow */}
-        <div
-          className="absolute -inset-10 rounded-full pointer-events-none"
-          style={{
-            background: "radial-gradient(circle, rgba(59,130,246,0.25) 0%, rgba(88,28,135,0.12) 40%, transparent 70%)",
-            filter: "blur(30px)",
-            animation: prefersReduced ? "none" : "pulse 4s ease-in-out infinite",
-          }}
-        />
-        {/* Glass orb */}
-        <div
-          className="relative w-[200px] h-[200px] sm:w-[220px] sm:h-[220px] rounded-full flex items-center justify-center overflow-hidden"
-          style={{
-            background: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 100%)",
-            boxShadow: "0 0 60px rgba(59,130,246,0.2), inset 0 0 60px rgba(255,255,255,0.06), 0 8px 32px rgba(0,0,0,0.3)",
-            backdropFilter: "blur(12px)",
-            border: "1px solid rgba(255,255,255,0.15)",
-          }}
-        >
-          <Image
-            src="/images/guardx-final-logo.jpg"
-            alt="GuardX Logo"
-            width={180}
-            height={180}
-            className="rounded-full object-cover w-[170px] h-[170px] sm:w-[190px] sm:h-[190px]"
-            priority
-          />
-        </div>
-      </div>
-    </div>
-  )
-}
+    <main>
+      <LocalBusinessJsonLd />
+      <Header />
 
-/* ------------------------------------------------------------------ */
-/*  Animated headline with wave + shimmer                              */
-/* ------------------------------------------------------------------ */
-function AnimatedHeadline() {
-  const prefersReduced = useReducedMotion()
-  const words = "Website Design & SEO Foundation".split(" ")
-  const line2 = "for Local Businesses"
-
-  /* Build a flat index so each letter gets a unique wave delay */
-  let globalIndex = 0
-
-  return (
-    <AnimatedPageTitle text="Web Design & SEO Foundation for Local Businesses" />
-  )
-}
-
-/* ------------------------------------------------------------------ */
-/*  Scroll-reveal wrapper                                              */
-/* ------------------------------------------------------------------ */
-function Reveal({
-  children,
-  className = "",
-  delay = 0,
-}: {
-  children: React.ReactNode
-  className?: string
-  delay?: number
-}) {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: "-80px" })
-  const prefersReduced = useReducedMotion()
-
-  return (
-    <motion.div
-      ref={ref}
-      className={className}
-      initial={prefersReduced ? {} : { opacity: 0, y: 36 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay, ease: "easeOut" }}
-    >
-      {children}
-    </motion.div>
-  )
-}
-
-/* ------------------------------------------------------------------ */
-/*  Feature card with glow hover                                       */
-/* ------------------------------------------------------------------ */
-function FeatureCard({
-  icon: Icon,
-  title,
-  description,
-  delay = 0,
-}: {
-  icon: React.ElementType
-  title: string
-  description: string
-  delay?: number
-}) {
-  return (
-    <Reveal delay={delay}>
-      <div className="group relative rounded-2xl p-6 sm:p-8 transition-all duration-500 hover:scale-[1.03] bg-white/[0.04] border border-white/10 backdrop-blur-sm hover:bg-white/[0.08] hover:border-white/20 hover:shadow-[0_0_40px_rgba(59,130,246,0.12)]">
-        <div className="flex items-center justify-center w-14 h-14 rounded-xl mb-5 bg-[rgba(59,130,246,0.15)] group-hover:bg-[rgba(59,130,246,0.25)] transition-colors duration-300">
-          <Icon className="w-7 h-7 text-blue-400" />
-        </div>
-        <h3 className="text-xl font-bold text-white mb-3">{title}</h3>
-        <p className="text-[#94a3b8] leading-relaxed">{description}</p>
-      </div>
-    </Reveal>
-  )
-}
-
-/* ------------------------------------------------------------------ */
-/*  Pricing card                                                       */
-/* ------------------------------------------------------------------ */
-function PricingCard({
-  title,
-  price,
-  unit,
-  features,
-  highlight = false,
-  delay = 0,
-}: {
-  title: string
-  price: string
-  unit?: string
-  features: string[]
-  highlight?: boolean
-  delay?: number
-}) {
-  return (
-    <Reveal delay={delay}>
-      <div
-        className={`relative rounded-2xl p-8 transition-all duration-500 hover:scale-[1.03] ${
-          highlight
-            ? "bg-white/[0.08] border-2 border-blue-500/40 shadow-[0_0_40px_rgba(59,130,246,0.15)]"
-            : "bg-white/[0.04] border border-white/10"
-        } backdrop-blur-sm`}
-      >
-        {highlight && (
-          <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-blue-500 text-white text-xs font-bold rounded-full tracking-wider uppercase">
-            Most Popular
-          </div>
-        )}
-        <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
-        <div className="mb-6">
-          <span className="text-4xl font-bold text-white">{price}</span>
-          {unit && <span className="text-[#94a3b8] ml-1 text-base">{unit}</span>}
-        </div>
-        <ul className="space-y-3 mb-8">
-          {features.map((f) => (
-            <li key={f} className="flex items-start gap-3 text-[#94a3b8]">
-              <CheckCircle className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
-              <span>{f}</span>
-            </li>
-          ))}
-        </ul>
-        <Link
-          href="/contact"
-          className={`block text-center py-3 px-6 rounded-xl font-semibold transition-all duration-300 ${
-            highlight
-              ? "bg-blue-500 text-white hover:bg-blue-600 hover:shadow-[0_0_24px_rgba(59,130,246,0.4)]"
-              : "bg-white/10 text-white hover:bg-white/20"
-          }`}
-        >
-          Get a Quote
-        </Link>
-      </div>
-    </Reveal>
-  )
-}
-
-/* ================================================================== */
-/*  MAIN PAGE                                                          */
-/* ================================================================== */
-export default function HomePage() {
-  return (
-    <div className="relative min-h-screen overflow-x-hidden">
-      <AnimatedBackground />
-      <FloatingParticles />
-
-      <Navigation />
-
-      {/* ============================================================ */}
-      {/*  HERO                                                         */}
-      {/* ============================================================ */}
-      <section className="relative pt-20 pb-24 sm:pt-28 sm:pb-32 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-            {/* Copy */}
-            <div className="flex-1 text-center lg:text-left">
-              <Reveal>
-                <AnimatedHeadline />
-              </Reveal>
-
-              <Reveal delay={0.15}>
-                <p className="text-lg sm:text-xl text-[#94a3b8] mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                  Modern, lightning-fast websites built to rank. Structured correctly for Google from day one so your
-                  business gets found by the right customers.
-                </p>
-              </Reveal>
-
-              <Reveal delay={0.3}>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                  <Link
-                    href="/web-design"
-                    className="inline-flex items-center justify-center gap-2 bg-blue-500 text-white hover:bg-blue-600 px-8 py-4 text-lg font-bold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(59,130,246,0.4)]"
-                  >
-                    Web Design <ArrowRight className="w-5 h-5" />
-                  </Link>
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center justify-center gap-2 bg-white/10 text-white hover:bg-white/20 px-8 py-4 text-lg font-bold rounded-xl border border-white/20 transition-all duration-300 hover:scale-105 backdrop-blur-sm"
-                  >
-                    Get a Quote
-                  </Link>
-                </div>
-              </Reveal>
-            </div>
-
-            {/* Bouncing logo orb */}
-            <Reveal delay={0.2} className="flex-1 w-full">
-              <BouncingOrb />
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* ============================================================ */}
-      {/*  WEBSITE DESIGN FEATURES                                      */}
-      {/* ============================================================ */}
-      <MovingGoogleReviews />
-
-      <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <Reveal>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-4 text-balance">
-              What You Get
-            </h2>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="text-[#94a3b8] text-lg text-center max-w-3xl mx-auto mb-16 leading-relaxed">
-              Every site we build is custom-designed, fully responsive, and engineered for performance.
-              No templates. No shortcuts.
-            </p>
-          </Reveal>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <FeatureCard
-              icon={Code2}
-              title="Modern Professional Design"
-              description="Bespoke designs tailored to your brand identity. Hand-crafted for a premium look that builds instant trust with customers."
-              delay={0}
-            />
-            <FeatureCard
-              icon={Smartphone}
-              title="Mobile-Friendly & Responsive"
-              description="Flawless experience on every device. Mobile-first design ensures your site works perfectly wherever customers find you."
-              delay={0.1}
-            />
-            <FeatureCard
-              icon={Zap}
-              title="Fast Loading Performance"
-              description="Sub-second load times with optimised images, clean code, and modern hosting infrastructure that keeps visitors engaged."
-              delay={0.2}
-            />
-            <FeatureCard
-              icon={Layers}
-              title="Clear Structure for Enquiries"
-              description="Strategic layout and clear calls-to-action designed to guide visitors towards contacting your business."
-              delay={0.3}
-            />
-            <FeatureCard
-              icon={Search}
-              title="Strong SEO Foundation"
-              description="Proper meta tags, semantic HTML, clean URLs, and Core Web Vitals optimisation built into every page from day one."
-              delay={0.4}
-            />
-          </div>
-
-          <Reveal delay={0.5}>
-            <div className="mt-12 max-w-3xl mx-auto rounded-xl bg-white/[0.05] border border-white/10 p-6 text-center">
-              <p className="text-[#cbd5e1] leading-relaxed">
-                {"We don't run ongoing SEO campaigns \u2014 we build a strong SEO foundation so your website is ready to rank."}
-              </p>
-              <p className="text-[#94a3b8] text-sm mt-4">
-                Learn more about our{" "}
-                <Link href="/web-design" className="text-blue-400 hover:text-blue-300 underline">web design services</Link>,{" "}
-                <Link href="/website-design-uk" className="text-blue-400 hover:text-blue-300 underline">UK website design</Link>, or{" "}
-                <Link href="/seo-foundation" className="text-blue-400 hover:text-blue-300 underline">SEO foundation</Link>.
-              </p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ============================================================ */}
-      {/*  SEO FOUNDATION DETAIL                                        */}
-      {/* ============================================================ */}
-
-      <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row items-center gap-16">
-            <div className="flex-1">
-              <Reveal>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 text-balance">
-                  SEO Foundation Included with Professional Website Package
-                </h2>
-              </Reveal>
-              <Reveal delay={0.1}>
-                <p className="text-[#94a3b8] text-lg mb-6 leading-relaxed">
-                  Our Professional Website package includes strong SEO foundation setup. This ensures your website is
-                  structured correctly and ready for Google indexing. This is a one-time setup built into the website.
-                </p>
-              </Reveal>
-              <Reveal delay={0.2}>
-                <ul className="space-y-4">
-                  {[
-                    "Proper heading hierarchy & semantic HTML5",
-                    "Optimised meta titles & descriptions",
-                    "XML sitemap & robots.txt configuration",
-                    "Core Web Vitals optimisation",
-                    "Mobile-first indexing ready",
-                    "Fast page load speeds",
-                  ].map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-[#94a3b8]">
-                      <CheckCircle className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </Reveal>
-            </div>
-
-            {/* Visual grid */}
-            <Reveal delay={0.2} className="flex-1 flex justify-center">
-              <div className="relative w-full max-w-md">
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 blur-3xl" />
-                <div className="relative grid grid-cols-2 gap-4">
-                  {[
-                    { icon: Search, label: "SEO Ready" },
-                    { icon: Globe, label: "Clean URLs" },
-                    { icon: BarChart3, label: "Core Web Vitals" },
-                    { icon: FileCode, label: "Clean Code" },
-                  ].map((item) => (
-                    <div
-                      key={item.label}
-                      className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-white/[0.05] border border-white/10 backdrop-blur-sm"
-                    >
-                      <item.icon className="w-10 h-10 text-blue-400" />
-                      <span className="text-white font-semibold text-sm text-center">{item.label}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* ============================================================ */}
-      {/*  PRICING                                                      */}
-      {/* ============================================================ */}
-      <MovingGoogleReviews />
-
-      <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <Reveal>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-center mb-4 text-balance">
-              Transparent Pricing
-            </h2>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="text-[#94a3b8] text-lg text-center max-w-2xl mx-auto mb-16 leading-relaxed">
-              Simple, honest pricing with no hidden fees.
-            </p>
-            <p className="text-sm text-[#94a3b8] text-center max-w-2xl mx-auto mt-4">Built using modern, professional technology for speed, reliability, and long-term performance.</p>
-          </Reveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            <PricingCard
-              title="Starter Website"
-              price="from &pound;500"
-              features={[
-                "Modern, professional website (built for local UK businesses)",
-                "Mobile-friendly design across phones, tablets and desktops",
-                "Clear layout designed to generate enquiries",
-                "Click-to-call, click-to-email and contact options",
-                "WhatsApp chat integration (optional)",
-                "Social media links added (Facebook, Instagram, etc.)",
-                "Contact form that sends straight to your email",
-              ]}
-              delay={0}
-            />
-            <PricingCard
-              title="Professional Website + SEO Foundation"
-              price="from &pound;1,000"
-              features={[
-                "Everything in Starter, plus an SEO-ready structure",
-                "Service pages structured for better search visibility",
-                "Location pages to target your service areas",
-                "Clean URL structure and internal linking",
-                "Meta titles and descriptions set up properly",
-                "Sitemap.xml and robots.txt included",
-                "Speed and performance optimised",
-                "Structured correctly for Google indexing",
-              ]}
-              highlight
-              delay={0.1}
-            />
-            <PricingCard
-              title="Website Hosting"
-              price="&pound;30"
-              unit="/ month"
-              features={[
-                "Hosting to keep your website live and accessible",
-                "Fast, reliable hosting setup",
-                "Domain connection and deployment included",
-                "Light support if you need help or advice",
-                "No long contracts — cancel anytime",
-              ]}
-              delay={0.2}
-            />
-          </div>
-
-          <Reveal delay={0.3}>
-            <div className="mt-12 text-center">
-              <Link
-                href="/pricing"
-                className="text-blue-400 hover:text-blue-300 underline text-lg font-medium"
-              >
-                View full pricing details
-              </Link>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-
-      {/* ============================================================ */}
-      {/*  WEBSITE HOSTING                                               */}
-      {/* ============================================================ */}
-
-      <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+      {/* HERO */}
+      <section className="pt-28">
+        <div className="container-pad">
+          <div className="grid items-center gap-10 lg:grid-cols-2">
             <div>
-              <Reveal>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 text-balance">
-                  Website Hosting by GuardX
-                </h2>
-              </Reveal>
-              <Reveal delay={0.08}>
-                <p className="text-[#94a3b8] text-lg leading-relaxed">
-                  Website Hosting by GuardX is <span className="text-white font-semibold">&pound;30/month</span>.
-                  It keeps your website live, fast, and accessible to customers. Built on reliable modern infrastructure
-                  with support available if needed.
-                </p>
-              </Reveal>
-              <Reveal delay={0.14}>
-                <div className="mt-6 flex flex-wrap gap-3">
-                  {[
-                    "Fast global delivery",
-                    "Secure by default",
-                    "Simple, reliable setup",
-                    "Support available if needed",
-                  ].map((t) => (
-                    <span
-                      key={t}
-                      className="inline-flex items-center rounded-full border border-[rgba(148,163,184,0.18)] bg-[rgba(255,255,255,0.04)] px-4 py-2 text-sm text-[#cbd5e1]"
-                    >
-                      <CheckCircle className="h-4 w-4 text-blue-400 mr-2" />
-                      {t}
-                    </span>
-                  ))}
+              <div className="badge">
+                <Icons.Star className="h-4 w-4 text-gf-lime" />
+                Family‑run • 65+ years combined experience • Free estimates
+              </div>
+
+              <h1 className="mt-5 text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight leading-tight md:leading-[1.08]">
+  <WavyText text="Flooring that feels premium" />
+  <br className="hidden sm:block" />
+  <span className="block sm:mt-2">
+    <WavyText text="— fitted with pride." />
+  </span>
+</h1>
+
+              <p className="mt-4 text-base text-white/70 md:text-lg">
+                Greenfields Flooring is a family‑run showroom in Lancing. We supply and fit carpets, vinyl &amp; LVT, wood &amp; laminate,
+                natural flooring, plus commercial and safety flooring — with a finish you’ll be proud of.
+              </p>
+
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                <a className="btn btn-primary" href={`tel:${site.phone.replace(/\s/g, "")}`}>
+                  <Icons.Phone className="h-4 w-4" />
+                  Call {site.phone}
+                </a>
+                <a className="btn btn-ghost" href="#contact">
+                  Get a quote
+                </a>
+              </div>
+
+              <div className="mt-8 grid gap-3 sm:grid-cols-3">
+                {site.proof.map((p) => (
+                  <div key={p.k} className="card hover-lift">
+                    <div className="text-xl font-semibold text-gf-lime">{p.k}</div>
+                    <div className="mt-1 text-sm text-white/70">{p.v}</div>
+                  </div>
+                ))}
+              </div>
+
+              <ReviewsMarquee />
+
+<div className="mt-10 grid gap-5 lg:grid-cols-12">
+  <div className="lg:col-span-7 card p-0 overflow-hidden hover-lift">
+    <a href={site.socials.checkatrade} target="_blank" rel="noreferrer" className="block">
+      <div className="p-6">
+        <div className="text-sm text-white/60">Trusted on</div>
+        <div className="mt-3">
+          <img src="/checkatrade.svg" alt="Checkatrade" className="w-full max-w-[520px] wave-underline" />
+        </div>
+        <div className="mt-4 text-sm text-white/70">
+          Rated highly by customers — view our profile and recent feedback.
+        </div>
+        <div className="mt-6">
+          <span className="btn btn-primary">View Checkatrade</span>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <div className="lg:col-span-5 card hover-lift">
+    <div className="text-sm font-semibold">Prefer to speak to us?</div>
+    <div className="mt-2 text-sm text-white/70">The fastest way to get a quote is by phone.</div>
+    <div className="mt-5 flex flex-col gap-3">
+      <a className="btn btn-primary" href={`tel:${site.phone}`}>Call {site.phone}</a>
+      <a className="btn btn-ghost" href={site.socials.googleReview} target="_blank" rel="noreferrer">
+        <span className="inline-flex items-center gap-2 text-sm font-semibold">
+          <Icons.GoogleG className="h-4 w-4" /> Leave a Google review
+        </span>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+              <div className="mt-8">
+                <RollingLogo />
                 </div>
-              </Reveal>
             </div>
 
-            <Reveal delay={0.1}>
-              <div className="rounded-3xl border border-[rgba(148,163,184,0.14)] bg-[rgba(255,255,255,0.03)] p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.04)]">
-                <h3 className="text-xl font-semibold text-white mb-4">What hosting covers</h3>
-                <ul className="space-y-3 text-[#94a3b8]">
-                  {[
-                    "Keeping your website live on reliable infrastructure",
-                    "Connecting your domain and ensuring it stays online",
-                    "Ongoing monitoring of critical errors (if reported)",
-                  ].map((x) => (
-                    <li key={x} className="flex items-start gap-3">
-                      <CheckCircle className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
-                      <span>{x}</span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="text-xs text-[#94a3b8] mt-5">
-                  Note: Content changes and new pages are handled separately to keep things fair and predictable.
-                </p>
+            <div className="relative overflow-hidden">
+              <div className="absolute inset-0 sm:-inset-6 rounded-[2.5rem] bg-gf-lime/10 blur-2xl" />
+              <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 shadow-soft">
+                <img
+                  src="/shop.webp"
+                  alt="Greenfields Flooring shop front in Lancing"
+                  className="h-[420px] w-full object-cover md:h-[520px]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6">
+                  <div className="badge">
+                    <Icons.MapPin className="h-4 w-4 text-gf-lime" />
+                    76 Manor Road, Lancing, BN15 0HD
+                  </div>
+                  <div className="mt-3 text-lg font-semibold">Visit the showroom</div>
+                  <div className="mt-1 text-sm text-white/70">
+                    Friendly advice, samples to compare, and expert fitting booked in with you.
+                  </div>
+                </div>
               </div>
-            </Reveal>
+              <div className="mt-4 flex flex-wrap items-center gap-3">
+                <a aria-label="Facebook" href={site.socials.facebook} target="_blank" rel="noreferrer" className="grid h-11 w-11 place-items-center rounded-xl bg-white/5 ring-1 ring-white/10 hover:bg-white/10 transition hover-lift">
+                  <Icons.FacebookColor className="h-6 w-6" />
+                </a>
+                <a aria-label="Instagram" href={site.socials.instagram} target="_blank" rel="noreferrer" className="grid h-11 w-11 place-items-center rounded-xl bg-white/5 ring-1 ring-white/10 hover:bg-white/10 transition hover-lift">
+                  <Icons.InstagramColor className="h-6 w-6" />
+                </a>
+                <a href={site.socials.googleReview} target="_blank" rel="noreferrer" className="btn btn-ghost px-4 py-3 hover-lift w-full sm:w-auto" style={{ pointerEvents: "auto" }}>
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold">
+                    <Icons.GoogleG className="h-4 w-4" /> Google Review
+                  </span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ============================================================ */}
-      {/*  MODERN TECHNOLOGY                                             */}
-      {/* ============================================================ */}
+      {/* SERVICES */}
+      <section id="services" className="mt-20">
+        <div className="container-pad">
+          <SectionTitle
+            kicker="What we do"
+            title="Supply & fit — done properly"
+            desc="From cosy carpets to hard‑wearing commercial finishes, we’ll guide you to the right product, prep the floor correctly, and fit it beautifully."
+          />
 
-      <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <Reveal>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 text-balance text-center">
-              Built Using Modern Technology
-            </h2>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="text-[#94a3b8] text-lg text-center max-w-3xl mx-auto mb-14 leading-relaxed">
-              Modern build quality matters. Your website is designed to load fast, look premium, and convert visitors into enquiries.
-            </p>
-          </Reveal>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {[
-              { icon: Zap, title: "Fast loading performance", desc: "Optimised builds and modern hosting for quick load times." },
-              { icon: Smartphone, title: "Fully mobile responsive", desc: "Designed to look perfect on phones, tablets and desktop." },
-              { icon: FileCode, title: "Modern web standards", desc: "Clean semantic structure built the right way." },
-              { icon: Search, title: "Google-ready structure", desc: "Structured correctly so Google can crawl and understand your site." },
-              { icon: Layers, title: "Built to convert", desc: "Clear calls-to-action and layout built to generate enquiries." },
-              { icon: Globe, title: "Scalable foundation", desc: "Easy to expand with new pages when your business grows." },
-            ].map((i, idx) => (
-              <FeatureCard key={i.title} icon={i.icon} title={i.title} description={i.desc} delay={idx * 0.05} />
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {site.services.map((s) => (
+              <div key={s.title} className="card hover-lift">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <div className="text-lg font-semibold">{s.title}</div>
+                    <p className="mt-2 text-sm text-white/70">{s.desc}</p>
+                  </div>
+                  <div className="h-10 w-10 rounded-2xl bg-gf-lime/10 ring-1 ring-gf-lime/20" />
+                </div>
+                <div className="mt-6 hr" />
+                <div className="mt-4 flex items-center justify-between text-xs text-white/55">
+                  <span>Free estimate available</span>
+                  <a href="#contact" className="text-gf-lime hover:underline">
+                    Ask a question →
+                  </a>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
-      {/* ============================================================ */}
-      {/*  REVIEW GENERATION ADD-ON                                     */}
-      {/* ============================================================ */}
 
-      <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <Reveal>
-            <div className="relative rounded-2xl overflow-hidden bg-white/[0.04] border border-white/10 backdrop-blur-sm p-8 sm:p-12 text-center">
-              {/* Subtle glow behind */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 pointer-events-none" />
+      {/* GALLERY */}
+      <section id="gallery" className="mt-20">
+        <div className="container-pad">
+          <SectionTitle
+            kicker="Work & showroom"
+            title="A look at Greenfields"
+            desc="Bring ideas, measurements, or just a rough brief — we’ll help you narrow it down and book fitting."
+          />
 
-              <div className="relative">
-                <div className="flex items-center justify-center gap-3 mb-6">
-                  <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-[rgba(59,130,246,0.15)]">
-                    <Star className="w-7 h-7 text-blue-400" />
-                  </div>
-                  <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-[rgba(59,130,246,0.15)]">
-                    <MessageSquare className="w-7 h-7 text-blue-400" />
-                  </div>
-                </div>
-
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 text-balance">
-                  Need More Google Reviews?
-                </h2>
-                <p className="text-[#94a3b8] text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
-                  Review Generation is available as an optional add-on service to help businesses collect more Google
-                  reviews. Automated email and SMS review requests that boost your online visibility.
-                </p>
-
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Link
-                    href="/review-generation"
-                    className="inline-flex items-center justify-center gap-2 bg-blue-500 text-white hover:bg-blue-600 px-8 py-4 text-lg font-bold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(59,130,246,0.4)]"
-                  >
-                    Learn About Review Generation <ArrowRight className="w-5 h-5" />
-                  </Link>
-                  <Link
-                    href="/real-results"
-                    className="inline-flex items-center justify-center gap-2 bg-white/10 text-white hover:bg-white/20 px-8 py-4 text-lg font-bold rounded-xl border border-white/20 transition-all duration-300 hover:scale-105 backdrop-blur-sm"
-                  >
-                    See Results
-                  </Link>
-                </div>
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {(site as any).gallery?.slice(0, 12).map((src: string, idx: number) => (
+              <div key={idx} className="card p-0 overflow-hidden hover-lift">
+                <img src={src} alt={`Greenfields Flooring photo ${idx + 1}`} className="h-[240px] w-full object-cover" />
               </div>
-            </div>
-          </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ============================================================ */}
-      {/*  FINAL CTA                                                    */}
-      {/* ============================================================ */}
-      <MovingGoogleReviews />
+      {/* ABOUT */}
+      <section id="about" className="mt-20">
+        <div className="container-pad">
+          <SectionTitle
+            kicker="About Greenfields"
+            title="Generations of craftsmanship"
+            desc="We pride ourselves on reliability, high‑level workmanship and friendly service — whether it’s one room or a full commercial fit‑out."
+          />
 
-      <section className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <Reveal>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 text-balance">
-              Ready to Build a Website That Actually Works?
-            </h2>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="text-[#94a3b8] text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-              Let us design and build a premium website with proper SEO foundations so your
-              business gets found by the right customers.
-            </p>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/web-design"
-                className="inline-flex items-center justify-center gap-2 bg-blue-500 text-white hover:bg-blue-600 px-8 py-4 text-lg font-bold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(59,130,246,0.4)]"
-              >
-                View Our Work <ArrowRight className="w-5 h-5" />
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center gap-2 bg-white/10 text-white hover:bg-white/20 px-8 py-4 text-lg font-bold rounded-xl border border-white/20 transition-all duration-300 hover:scale-105 backdrop-blur-sm"
-              >
-                Get a Quote
-              </Link>
+          <div className="mt-10 grid gap-5 lg:grid-cols-3">
+            <div className="card lg:col-span-2">
+              <h3 className="text-xl font-semibold">A family‑run business in Lancing</h3>
+              <p className="mt-3 text-sm text-white/70">
+                Combined experience of over 65 years of carpet fitting skills run through the Greenfield family generations.
+                We specialise in both domestic and contract/commercial flooring, with careful preparation and a finish that lasts.
+              </p>
+
+              <div className="mt-6 grid gap-4 md:grid-cols-3">
+                <div className="rounded-2xl bg-white/5 p-4 ring-1 ring-white/10">
+                  <div className="text-gf-lime font-semibold">Advice first</div>
+                  <div className="mt-1 text-sm text-white/70">We’ll guide you to the right product for your space & budget.</div>
+                </div>
+                <div className="rounded-2xl bg-white/5 p-4 ring-1 ring-white/10">
+                  <div className="text-gf-lime font-semibold">Prep done right</div>
+                  <div className="mt-1 text-sm text-white/70">Uplift, latexing and hardboarding for a flawless base.</div>
+                </div>
+                <div className="rounded-2xl bg-white/5 p-4 ring-1 ring-white/10">
+                  <div className="text-gf-lime font-semibold">Fit with pride</div>
+                  <div className="mt-1 text-sm text-white/70">Quality workmanship and clean finishing details.</div>
+                </div>
+              </div>
             </div>
-          </Reveal>
+
+            <div className="card hover-lift">
+              <h3 className="text-xl font-semibold">Opening times</h3>
+              <div className="mt-4 grid gap-2 text-sm text-white/70">
+                {site.opening.map((o) => (
+                  <div key={o.day} className="flex items-center justify-between">
+                    <span>{o.day}</span>
+                    <span className="text-white/85">{o.hours}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-6 hr" />
+              <div className="mt-6">
+                <a className="btn btn-primary w-full" href="#contact">
+                  Get a free estimate
+                </a>
+                </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CONTACT */}
+      <section id="contact" className="mt-20 pb-10">
+        <div className="container-pad">
+          <SectionTitle
+            kicker="Get in touch"
+            title="Free estimates & friendly advice"
+            desc="Call, email, or visit the showroom. If you’d like a quote, tell us what rooms you’re doing and what look you’re going for."
+          />
+
+          <div className="mt-10 grid gap-5 lg:grid-cols-12">
+            <div className="card lg:col-span-5">
+              <div className="grid gap-4 text-sm text-white/75">
+                <a className="inline-flex items-center gap-3 hover:text-white" href={`tel:${site.phone.replace(/\s/g, "")}`}>
+                  <span className="grid h-10 w-10 place-items-center rounded-2xl bg-gf-lime/10 ring-1 ring-gf-lime/20">
+                    <Icons.Phone className="h-5 w-5 text-gf-lime" />
+                  </span>
+                  <div>
+                    <div className="text-xs text-white/55">Phone</div>
+                    <div className="font-semibold">{site.phone}</div>
+                  </div>
+                </a>
+
+                <a className="inline-flex items-center gap-3 hover:text-white" href={`mailto:${site.email}`}>
+                  <span className="grid h-10 w-10 place-items-center rounded-2xl bg-gf-lime/10 ring-1 ring-gf-lime/20">
+                    <Icons.Mail className="h-5 w-5 text-gf-lime" />
+                  </span>
+                  <div>
+                    <div className="text-xs text-white/55">Email</div>
+                    <div className="font-semibold">{site.email}</div>
+                  </div>
+                </a>
+
+                <div className="inline-flex items-center gap-3">
+                  <span className="grid h-10 w-10 place-items-center rounded-2xl bg-gf-lime/10 ring-1 ring-gf-lime/20">
+                    <Icons.MapPin className="h-5 w-5 text-gf-lime" />
+                  </span>
+                  <div>
+                    <div className="text-xs text-white/55">Showroom</div>
+                    <div className="font-semibold">
+                      {site.address.line1}, {site.address.town} {site.address.postcode}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="hr my-2" />
+
+                <div className="flex items-center gap-3">
+                  <a aria-label="Facebook" className="grid h-11 w-11 place-items-center rounded-xl bg-white/5 ring-1 ring-white/10 hover:bg-white/10 transition hover-lift" href={site.socials.facebook} target="_blank" rel="noreferrer">
+                    <Icons.FacebookColor className="h-6 w-6" />
+                  </a>
+                  <a aria-label="Instagram" className="grid h-11 w-11 place-items-center rounded-xl bg-white/5 ring-1 ring-white/10 hover:bg-white/10 transition hover-lift" href={site.socials.instagram} target="_blank" rel="noreferrer">
+                    <Icons.InstagramColor className="h-6 w-6" />
+                  </a>
+                  <a className="btn btn-ghost px-4 py-3" href={site.socials.googleReview} target="_blank" rel="noreferrer">
+                    <span className="inline-flex items-center gap-2 text-sm font-semibold">
+                      <Icons.GoogleG className="h-4 w-4" /> Google Review
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="card lg:col-span-7">
+              <h3 className="text-xl font-semibold">Quick quote message</h3>
+              <p className="mt-2 text-sm text-white/70">
+                This form is set up as a simple mailto (so it works instantly on Vercel). If you want a proper
+                “send to inbox” form, tell me the preferred email and I’ll wire it up to a serverless function.
+              </p>
+
+              <ContactForm />
+            </div>
+          </div>
+
+          <div className="mt-6 text-center text-xs text-white/50">
+            Leave a Google review and help local customers find Greenfields faster. <a href={site.socials.googleReview} target="_blank" rel="noreferrer" className="text-gf-lime hover:underline inline-flex items-center gap-2"><Icons.GoogleG className="h-4 w-4" /> Leave a Google review</a>.
+          </div>
         </div>
       </section>
 
       <Footer />
-    </div>
-  )
+    </main>
+  );
 }

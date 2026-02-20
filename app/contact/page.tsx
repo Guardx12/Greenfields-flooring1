@@ -1,201 +1,161 @@
-"use client"
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { ContactForm } from "@/components/ContactForm";
+import { Icons } from "@/components/icons";
+import { site } from "@/components/site-data";
+import { WavyText } from "@/components/WavyText";
 
-import { Navigation } from "@/components/navigation"
-import { Footer } from "@/components/footer"
-import { AnimatedPageTitle } from "@/components/animated-page-title"
-import { Card, CardContent } from "@/components/ui/card"
-import { MapPin, Mail } from "lucide-react"
-import { Button } from "@/components/ui/button"
+export const metadata = {
+  title: "Contact & Directions",
+  description:
+    "Contact Greenfields Flooring in Lancing. Call, opening hours, showroom address and directions, plus a quick enquiry form.",
+};
 
 export default function ContactPage() {
-  const location = "West Sussex, United Kingdom"
-  const email = "info@guardxnetwork.com"
-  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`
+  const mapSrc =
+    "https://www.google.com/maps?q=" +
+    encodeURIComponent("Greenfields Flooring, 76 Manor Rd, Lancing BN15 0HD") +
+    "&output=embed";
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0a0e1a]">
-      <Navigation />
+    <main>
+      <Header />
 
-      <main className="flex-1">
-        {/* Hero Section */}
-        <section className="py-16 sm:py-20 lg:py-24">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <AnimatedPageTitle text="Contact" suffix="GuardX" className="mb-6" />
-            <p className="text-lg sm:text-xl text-[#94a3b8] leading-relaxed max-w-3xl mx-auto">
-              {"Wondering how your Google presence compares to competitors? Want to understand where you might be losing visibility locally? We're happy to have a straightforward conversation -- no pressure, just honest insight."}
+      <section className="pt-28">
+        <div className="container-pad">
+          <div className="mx-auto max-w-3xl">
+            <Breadcrumbs
+              items={[
+                { name: "Home", url: "/" },
+                { name: "Contact", url: "/contact" },
+              ]}
+            />
+
+            <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">
+              <WavyText text="Contact & directions" />
+            </h1>
+            <p className="mt-4 text-white/70">
+              Visit the showroom, give us a ring, or send a quick message. Fastest quotes are usually by phone.
             </p>
           </div>
-        </section>
 
-        {/* Contact Information Section */}
-        <section className="py-12 sm:py-16">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Contact Details Card */}
-              <Card className="border-white/10 bg-[#1e293b] shadow-lg">
-                <CardContent className="p-8">
-                  <h2 className="text-2xl font-bold text-blue-400 mb-6">Get In Touch</h2>
+          <div className="mt-10 grid gap-5 lg:grid-cols-12 min-w-0">
+            <div className="lg:col-span-5 card hover-lift">
+              <div className="text-sm font-semibold">Call the shop</div>
+              <a className="mt-3 btn btn-primary w-full" href={`tel:${site.phone}`}>
+                {site.phone}
+              </a>
 
-                  {/* Location */}
-                  <div className="mb-6">
-                    <div className="flex items-start gap-4">
-                      <div className="flex-shrink-0 w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center">
-                        <MapPin className="w-6 h-6 text-blue-400" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-white mb-2">Our Location</h3>
-                        <p className="text-[#94a3b8] leading-relaxed">{location}</p>
-                        <p className="text-sm text-[#64748b] mt-1">Serving businesses nationwide</p>
-                      </div>
-                    </div>
+              <div className="mt-6 hr" />
+
+              <div className="mt-6 text-sm font-semibold">Showroom</div>
+              <div className="mt-2 text-sm text-white/70">
+                {site.address.line1}
+                <br />
+                {site.address.town} {site.address.postcode}
+              </div>
+
+              <div className="mt-4 flex flex-wrap gap-3">
+                <a
+                  className="btn btn-ghost"
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+                    "Greenfields Flooring, 76 Manor Rd, Lancing BN15 0HD"
+                  )}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Get directions
+                </a>
+                <a
+                  className="btn btn-ghost"
+                  href={site.socials.googleReview}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold">
+                    <Icons.GoogleG className="h-4 w-4" /> Leave a review
+                  </span>
+                </a>
+              </div>
+
+              <div className="mt-6 flex items-center gap-3">
+                <a
+                  aria-label="Facebook"
+                  href={site.socials.facebook}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="grid h-11 w-11 place-items-center rounded-xl bg-white/5 ring-1 ring-white/10 hover:bg-white/10 transition hover-lift"
+                >
+                  <Icons.FacebookColor className="h-6 w-6" />
+                </a>
+                <a
+                  aria-label="Instagram"
+                  href={site.socials.instagram}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="grid h-11 w-11 place-items-center rounded-xl bg-white/5 ring-1 ring-white/10 hover:bg-white/10 transition hover-lift"
+                >
+                  <Icons.InstagramColor className="h-6 w-6" />
+                </a>
+                {site.socials.checkatrade ? (
+                  <a
+                    aria-label="Checkatrade"
+                    href={site.socials.checkatrade}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover-lift inline-flex items-center gap-3 rounded-2xl bg-white/5 px-4 py-3 ring-1 ring-white/10"
+                  >
+                    <img src="/checkatrade.svg" alt="Checkatrade" className="h-8 w-auto" />
+                  </a>
+                ) : null}
+              </div>
+
+              <div className="mt-6 hr" />
+
+              <div className="mt-6 text-sm font-semibold">Opening hours</div>
+              <div className="mt-3 grid gap-2 text-sm text-white/70">
+                {site.opening.map((o) => (
+                  <div key={o.day} className="flex items-center justify-between">
+                    <span>{o.day}</span>
+                    <span className="text-white/85">{o.hours}</span>
                   </div>
+                ))}
+              </div>
+            </div>
 
-                  {/* Email */}
-                  <div className="mb-6">
-                    <div className="flex items-start gap-4">
-                      <div className="flex-shrink-0 w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center">
-                        <Mail className="w-6 h-6 text-blue-400" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-white mb-2">Email Us</h3>
-                        <a
-                          href={`mailto:${email}`}
-                          className="text-[#94a3b8] hover:text-blue-400 transition-colors underline"
-                        >
-                          {email}
-                        </a>
-                        <p className="text-sm text-[#64748b] mt-1">We typically respond within 24 hours.</p>
-                      </div>
-                    </div>
+            <div className="lg:col-span-7 grid gap-5">
+              <div className="card p-0 overflow-hidden hover-lift">
+                <div className="p-6">
+                  <div className="text-sm font-semibold">Find us on Google Maps</div>
+                  <div className="mt-4 overflow-hidden rounded-2xl ring-1 ring-white/10">
+                    <iframe
+                      title="Greenfields Flooring map"
+                      src={mapSrc}
+                      className="h-[300px] sm:h-[360px] w-full"
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                    />
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
-              {/* Why Contact Us Card */}
-              <Card className="border-white/10 bg-[#1e293b] shadow-lg">
-                <CardContent className="p-8">
-                  <h2 className="text-2xl font-bold text-blue-400 mb-6">Why Get in Touch?</h2>
-
-                  <ul className="space-y-4">
-                    <li className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-6 h-6 bg-blue-500/20 rounded-full flex items-center justify-center mt-1">
-                        <span className="text-blue-400 text-sm font-bold">{"\u2713"}</span>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-white mb-1">Discuss Your Visibility Gaps</h4>
-                        <p className="text-[#94a3b8] text-sm">
-                          Understand where your Google presence may be falling behind competitors in your area.
-                        </p>
-                      </div>
-                    </li>
-
-                    <li className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-6 h-6 bg-blue-500/20 rounded-full flex items-center justify-center mt-1">
-                        <span className="text-blue-400 text-sm font-bold">{"\u2713"}</span>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-white mb-1">Review Your Google Presence</h4>
-                        <p className="text-[#94a3b8] text-sm">
-                          Get a clear picture of how active and trusted your profile appears to customers searching locally.
-                        </p>
-                      </div>
-                    </li>
-
-                    <li className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-6 h-6 bg-blue-500/20 rounded-full flex items-center justify-center mt-1">
-                        <span className="text-blue-400 text-sm font-bold">{"\u2713"}</span>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-white mb-1">Understand Your Local Position</h4>
-                        <p className="text-[#94a3b8] text-sm">
-                          Learn how you compare to other businesses in your area when customers are making decisions.
-                        </p>
-                      </div>
-                    </li>
-
-                    <li className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-6 h-6 bg-blue-500/20 rounded-full flex items-center justify-center mt-1">
-                        <span className="text-blue-400 text-sm font-bold">{"\u2713"}</span>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-white mb-1">No Pressure, Just Clarity</h4>
-                        <p className="text-[#94a3b8] text-sm">
-                          {"We're happy to share honest insight about your situation -- whether or not GuardX is right for you."}
-                        </p>
-                      </div>
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
+              <div className="card hover-lift">
+                <div className="text-sm font-semibold">Send a message</div>
+                <div className="mt-2 text-sm text-white/70">
+                  If you’d like, send a quick enquiry and we’ll get back to you.
+                </div>
+                <ContactForm />
+                <div className="mt-4 text-xs text-white/55">
+                  Prefer a quicker quote? Call <span className="text-white">{site.phone}</span>.
+                </div>
+              </div>
             </div>
           </div>
-        </section>
-
-        {/* Map Section */}
-        <section className="bg-[#111827] py-12 sm:py-16">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-white mb-4">
-                Find Us on <span className="text-blue-400">the Map</span>
-              </h2>
-              <p className="text-[#94a3b8]">Based in West Sussex, working with businesses across the UK.</p>
-            </div>
-
-            <div className="rounded-lg shadow-lg overflow-hidden border border-white/10">
-              <iframe
-                src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${encodeURIComponent(location)}&zoom=10`}
-                width="100%"
-                height="450"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="w-full"
-              />
-            </div>
-
-            <div className="text-center mt-6">
-              <Button
-                size="lg"
-                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold hover:shadow-[0_0_30px_rgba(59,130,246,0.4)]"
-                onClick={() => window.open(googleMapsUrl, "_blank")}
-              >
-                View West Sussex on Google Maps
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="bg-gradient-to-br from-[#818cf8] to-[#6d28d9] py-16">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Ready to Improve Your Google Presence?</h2>
-            <p className="text-xl text-indigo-100 mb-8">
-              Get in touch for a friendly, no-obligation conversation about your visibility and competitive position locally.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                size="lg"
-                variant="secondary"
-                className="bg-white text-[#6d28d9] hover:bg-indigo-50 font-semibold"
-                onClick={() => (window.location.href = `mailto:${email}`)}
-              >
-                Send Us an Email
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-2 border-white text-white hover:bg-white/10 font-semibold bg-transparent"
-                onClick={() => window.open(googleMapsUrl, "_blank")}
-              >
-                View on Map
-              </Button>
-            </div>
-          </div>
-        </section>
-      </main>
+        </div>
+      </section>
 
       <Footer />
-    </div>
-  )
+    </main>
+  );
 }

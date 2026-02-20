@@ -1,125 +1,81 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css"
-import Script from "next/script"
-import { WhatsAppBubble } from "@/components/whatsapp-bubble"
+import "./globals.css";
+import type { Metadata } from "next";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-})
-
-export const metadata: Metadata = {
+export const metadata = {
+  metadataBase: new URL("https://www.greenfields-flooring.co.uk"),
   title: {
-    default: "Web Design & SEO Foundation for Local Businesses | GuardX",
-    template: "%s | GuardX",
+    default: "Greenfields Flooring | Carpet, Vinyl, Wood & LVT Flooring in Lancing",
+    template: "%s | Greenfields Flooring"
   },
   description:
-    "Professional website design and SEO foundation for UK local businesses. Modern, fast websites built to generate enquiries.",
-  generator: "v0.app",
-  icons: {
-    icon: "/favicon.ico",
+    "Family‑run flooring showroom in Lancing with 65+ years experience. Carpets, vinyl, laminate, wood and LVT supplied and fitted with expert preparation and pride.",
+  keywords: [
+    "Greenfields Flooring",
+    "flooring Lancing",
+    "carpet shop Lancing",
+    "LVT flooring Lancing",
+    "vinyl flooring Lancing",
+    "wood flooring Lancing",
+    "carpet fitting Sussex",
+    "flooring showroom Lancing",
+    "flooring near Worthing",
+    "flooring West Sussex"
+  ],
+  authors: [{ name: "Greenfields Flooring" }],
+  creator: "Greenfields Flooring",
+  publisher: "Greenfields Flooring",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
   },
-  metadataBase: new URL("https://guardxnetwork.com"),
   openGraph: {
-    siteName: "GuardX",
     type: "website",
     locale: "en_GB",
-    url: "https://guardxnetwork.com",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "GuardX" }],
+    url: "https://www.greenfields-flooring.co.uk",
+    siteName: "Greenfields Flooring",
+    title:
+      "Greenfields Flooring | Premium Carpets, Vinyl, Wood & LVT in Lancing",
+    description:
+      "Visit our Lancing showroom for expert advice and flooring fitted with pride. Family‑run, trusted locally for generations.",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Greenfields Flooring showroom and fitted flooring",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Web Design & SEO Foundation for Local Businesses | GuardX",
+    title:
+      "Greenfields Flooring | Premium Flooring in Lancing",
     description:
-      "Professional website design and SEO foundation for UK local businesses. Modern, fast websites built to generate enquiries.",
-    images: ["/og-image.png"],
+      "Family‑run flooring showroom. Carpets, vinyl, wood & LVT supplied and fitted.",
+    images: ["/og-image.jpg"],
   },
-  alternates: { canonical: "https://guardxnetwork.com" },
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
-}
+  alternates: {
+    canonical: "https://www.greenfields-flooring.co.uk",
+  },
+};
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} antialiased`}>
-      <Script id="facebook-pixel" strategy="afterInteractive">
-        {`
-          !function(f,b,e,v,n,t,s)
-          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-          n.queue=[];t=b.createElement(e);t.async=!0;
-          t.src=v;s=b.getElementsByTagName(e)[0];
-          s.parentNode.insertBefore(t,s)}(window, document,'script',
-          'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', '643792238797788');
-          fbq('track', 'PageView');
-        `}
-      </Script>
-
-      <Script src="https://www.googletagmanager.com/gtag/js?id=AW-17521993303" strategy="afterInteractive" />
-
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'AW-17521993303');
-        `}
-      </Script>
-
-      <body className="min-h-screen bg-background text-foreground antialiased">
-        {children}
-
-        <WhatsAppBubble />
-
-        {/* Facebook Pixel noscript */}
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            src="https://www.facebook.com/tr?id=643792238797788&ev=PageView&noscript=1"
-          />
-        </noscript>
-      
-        <Script id="guardx-localbusiness-schema" type="application/ld+json" strategy="afterInteractive">
-          {`
-          {
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            "name": "GuardX Limited",
-            "url": "https://www.guardxnetwork.com",
-            "logo": "https://www.guardxnetwork.com/images/guardx-logo.png",
-            "image": "https://www.guardxnetwork.com/images/guardx-logo.png",
-            "description": "Website design, SEO foundation, and review generation services for UK local businesses.",
-            "areaServed": {
-              "@type": "Country",
-              "name": "United Kingdom"
-            },
-            "address": {
-              "@type": "PostalAddress",
-              "addressCountry": "GB",
-              "addressRegion": "West Sussex"
-            },
-            "sameAs": [
-              "https://www.guardxnetwork.com"
-            ]
-          }
-          `}
-        </Script>
-
-      </body>
+    <html lang="en">
+      <body>{children}</body>
     </html>
-  )
+  );
 }

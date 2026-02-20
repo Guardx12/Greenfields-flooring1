@@ -1,12 +1,11 @@
-import type { MetadataRoute } from "next"
+import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/api/"],
     },
-    sitemap: "https://guardxnetwork.com/sitemap.xml",
-  }
+    sitemap: "https://www.greenfields-flooring.co.uk/sitemap.xml",
+  };
 }
