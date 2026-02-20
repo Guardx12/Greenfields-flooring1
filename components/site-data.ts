@@ -42,7 +42,7 @@ export const site = {
   ],
   
   gallery: [
-    "/gallery/photo-01.jpeg",
+    "/gallery/photo-new.jpeg",
     "/gallery/photo-02.jpeg",
     "/gallery/photo-03.jpeg",
     "/gallery/photo-04.jpeg",
