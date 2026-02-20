@@ -1,0 +1,209 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gf-lime: #C7FF1A;
+  --gf-ink: #0B0F12;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: radial-gradient(1200px 600px at 20% 0%, rgba(199,255,26,0.18), transparent 55%),
+              radial-gradient(900px 500px at 90% 10%, rgba(199,255,26,0.10), transparent 60%),
+              linear-gradient(180deg, #070A0D, #0B0F12);
+  color: #EAF0F5;
+}
+
+::selection { background: rgba(199,255,26,0.25); }
+
+.container-pad { @apply mx-auto max-w-6xl px-4 sm:px-5 md:px-6; }
+
+.glass {
+  background: rgba(11,15,18,0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(199,255,26,0.18);
+}
+
+.badge {
+  @apply inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium;
+  border: 1px solid rgba(199,255,26,0.28);
+  background: rgba(199,255,26,0.08);
+}
+
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition;
+  box-shadow: 0 12px 26px rgba(0,0,0,0.35);
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, rgba(199,255,26,1), rgba(140,255,80,1));
+  color: #081013;
+}
+
+.btn-primary:hover { filter: brightness(1.05); transform: translateY(-1px); }
+.btn-ghost { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10); }
+.btn-ghost:hover { background: rgba(255,255,255,0.10); }
+
+.card {
+  @apply rounded-3xl p-6;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.hr { height: 1px; background: rgba(255,255,255,0.10); }
+
+
+/* --- Elite micro-interactions --- */
+@keyframes shimmerText {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes floaty {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-2px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes shineSweep {
+  0% { transform: translateX(-140%) rotate(12deg); opacity: 0; }
+  20% { opacity: 0.45; }
+  55% { opacity: 0.10; }
+  100% { transform: translateX(160%) rotate(12deg); opacity: 0; }
+}
+
+.hover-lift {
+  transition: transform 250ms cubic-bezier(.2,.8,.2,1), box-shadow 250ms cubic-bezier(.2,.8,.2,1), border-color 250ms;
+  will-change: transform;
+}
+.hover-lift:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 18px 46px rgba(0,0,0,0.45);
+  border-color: rgba(199,255,26,0.24);
+}
+
+.btn {
+  transition: transform 220ms cubic-bezier(.2,.8,.2,1), filter 220ms, box-shadow 220ms, background 220ms;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0px) scale(0.99); }
+
+.shimmer-title {
+  background: linear-gradient(110deg, rgba(255,255,255,0.92), rgba(199,255,26,0.95), rgba(255,255,255,0.92));
+  background-size: 220% 220%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmerText 6.5s ease-in-out infinite;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.40);
+}
+
+.wavy {
+  display: inline-block;
+  animation: floaty 4.8s ease-in-out infinite;
+}
+
+.logo-gleam {
+  position: relative;
+  overflow: hidden;
+}
+.logo-gleam::after {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
+  filter: blur(1px);
+  transform: translateX(-140%) rotate(12deg);
+  animation: shineSweep 6.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+
+/* --- Wavy heading overlay (keeps base text colour) --- */
+@keyframes waveSheen {
+  0% { background-position: 0% 50%; transform: translateY(0px); }
+  50% { background-position: 100% 50%; transform: translateY(-1px); }
+  100% { background-position: 0% 50%; transform: translateY(0px); }
+}
+
+.wave-wrap { position: relative; display: inline-block; }
+.wave-base { position: relative; z-index: 1; color: rgba(255,255,255,0.95); }
+.wave-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(110deg, rgba(199,255,26,0.0), rgba(199,255,26,0.55), rgba(255,255,255,0.0));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0.45;
+  mix-blend-mode: screen;
+  animation: waveSheen 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.wave-underline {
+  position: relative;
+  display: inline-block;
+}
+.wave-underline::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-10px;
+  height:8px;
+  opacity:0.55;
+  background:
+    radial-gradient(12px 8px at 10px 4px, rgba(199,255,26,0.9), transparent 60%),
+    radial-gradient(12px 8px at 34px 4px, rgba(199,255,26,0.7), transparent 60%),
+    radial-gradient(12px 8px at 58px 4px, rgba(199,255,26,0.9), transparent 60%),
+    radial-gradient(12px 8px at 82px 4px, rgba(199,255,26,0.7), transparent 60%);
+  background-size: 96px 8px;
+  background-repeat: repeat-x;
+  animation: shimmerText 4.8s ease-in-out infinite;
+}
+
+
+/* --- Mexican-wave letters --- */
+@keyframes mexWave {
+  0%, 70%, 100% { transform: translateY(0); }
+  12% { transform: translateY(-8px); }
+  24% { transform: translateY(0); }
+}
+.wave-letter {
+  display: inline-block;
+  animation: mexWave 2.8s ease-in-out infinite;
+  animation-delay: var(--delay, 0ms);
+  will-change: transform;
+}
+
+/* --- Stronger, unmistakable Mexican-wave (hero + headings) --- */
+@keyframes mexWaveStrong {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  15% { transform: translateY(-12px) rotate(-1deg); }
+  30% { transform: translateY(0px) rotate(0deg); }
+}
+.wave-letter {
+  display: inline-block;
+  animation-name: mexWaveStrong;
+  animation-duration: 2.2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-delay: var(--delay, 0ms);
+}
+
+.wave-wrap{ white-space: normal; }
+.wave-base{ white-space: normal; }
+
+
+/* --- Mobile layout safety --- */
+html, body { overflow-x: hidden; }
+img, svg, video, canvas { max-width: 100%; height: auto; }
+iframe { max-width: 100%; }
+* { min-width: 0; }
+.wave-wrap { display: inline-block; max-width: 100%; }
+.wave-base, .wave-overlay { max-width: 100%; }
