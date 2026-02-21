@@ -33,7 +33,7 @@ export function WavyText({
     return (
       <span key={`w-${idx}`} className="inline-block" aria-hidden={ariaHidden}>
         {letters.map((ch, i) => {
-          const delay = k * 90;
+          const delay = k * 70;
           k += 1;
           return (
             <span

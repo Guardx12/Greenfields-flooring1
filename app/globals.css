@@ -170,33 +170,16 @@ body {
 
 /* --- Mexican-wave letters --- */
 @keyframes mexWave {
-  0%, 70%, 100% { transform: translateY(0); }
-  12% { transform: translateY(-8px); }
-  24% { transform: translateY(0); }
-}
-.wave-letter {
-  display: inline-block;
-  animation: mexWave 2.8s ease-in-out infinite;
-  animation-delay: var(--delay, 0ms);
-  will-change: transform;
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  20% { transform: translateY(-6px) rotate(-0.5deg); }
+  40% { transform: translateY(0px) rotate(0deg); }
 }
 
-/* --- Stronger, unmistakable Mexican-wave (hero + headings) --- */
-@keyframes mexWaveStrong {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  18% { transform: translateY(-6px) rotate(-0.4deg); }
-  36% { transform: translateY(0px) rotate(0deg); }
-}
-  15% { transform: translateY(-12px) rotate(-1deg); }
-  30% { transform: translateY(0px) rotate(0deg); }
-}
 .wave-letter {
   display: inline-block;
-  animation-name: mexWaveStrong;
-  animation-duration: 3.6s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
+  animation: mexWave 3.8s ease-in-out infinite;
   animation-delay: var(--delay, 0ms);
+  will-change: transform;
 }
 
 .wave-wrap{ white-space: normal; }
