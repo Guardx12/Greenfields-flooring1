@@ -11,7 +11,7 @@ export function RollingLogo() {
           <motion.div
             initial={{ width: "0%" }}
             animate={{ width: ["0%", "100%", "0%"] }}
-            transition={{ duration: 7.5, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: 10.5, repeat: Infinity, ease: "easeInOut" }}
             className="h-full"
             style={{
               background:
@@ -24,12 +24,12 @@ export function RollingLogo() {
       <motion.div
         initial={{ x: "-20%" }}
         animate={{ x: ["-20%", "95%", "-20%"] }}
-        transition={{ duration: 7.5, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 10.5, repeat: Infinity, ease: "easeInOut" }}
         className="relative z-10"
       >
         <motion.div
-          animate={{ rotate: [0, 720, 1440] }}
-          transition={{ duration: 7.5, repeat: Infinity, ease: "easeInOut" }}
+          animate={{ rotate: [0, 360] }}
+          transition={{ duration: 10.5, repeat: Infinity, ease: "easeInOut" }}
           className="h-20 w-20 rounded-2xl overflow-hidden ring-1 ring-white/10 shadow-soft bg-black/30 logo-gleam"
         >
           <img src="/logo.jpg" alt="Greenfields logo" className="h-full w-full object-cover" />
